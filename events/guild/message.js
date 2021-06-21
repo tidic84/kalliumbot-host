@@ -1,22 +1,22 @@
 const { MessageEmbed } = require('discord.js');
-var path = require('path');
-var appDir = path.dirname(require.main.filename);
-const { blue, green, yellow, red } = require(`${appDir}/commands/colors.json`)
-const { prefix, token } = require(`${appDir}/config.json`)
+const { blue, green, yellow, red } = require(`../../commands/colors.json`)
+const { prefix } = require(`../../config.js`)
 
-module.exports = (Discord, client, message) => {
+module.exports = async (Discord, client, message) => {
     if(!message.content.startsWith(prefix) || message.author.bot) return;
 
+    const settings = await client.getGuild(message.guild);
+    
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
 
-    const command = client .commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
+    const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
 
 
     if(command) {
 
         try {
-            command.execute(client, message, args, cmd,  Discord);
+            command.execute(client, message, settings, args, cmd, Discord);
         } catch (error) {
             console.error(error);
             const embed = new MessageEmbed()
