@@ -1,5 +1,4 @@
 module.exports = {
-  token: "ODU1NTQ1NDM2MzgyMTY3MDgw.YM0Cxw.OzKmaGWJpJQ-zVn77iePMR2Zvng",
   MONGODB_SRV: process.env.DB_LINK,
   DEFAULTSETTINGS: {
     prefix: "!",
