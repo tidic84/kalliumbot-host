@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js');
 const { blue, green, yellow, red } = require('../colors.json')
 
 module.exports = {
-    name: 'withdraw',
-    aliases: ["with", "wd"],
+    name: 'deposit',
+    aliases: ["dep", "dp"],
     description: 'Retirer de l\'argent a la banque',
     
     async execute(client, message, settings, args, cmd, profileData) { 
@@ -24,31 +24,31 @@ module.exports = {
 
         } else if (amount == "all") { 
 
-            amountW = parseInt(profileData.coins) + parseInt(profileData.bank)
-            amountB = 0
+            amountW = 0
+            amountB = parseInt(profileData.coins) + parseInt(profileData.bank)
 
             const embed = new MessageEmbed()
-                .setTitle('Retrait réussi')
-                .setDescription(`$${profileData.bank} ont été retirés avec succès.`)
+                .setTitle('Dépot réussi')
+                .setDescription(`$${profileData.coins} ont été déposés avec succès.`)
                 .setColor(`${green}`)
             message.channel.send(embed);
 
             return client.updateProfile(message.author, { coins: amountW, bank: amountB}, message.member.guild.id)
-        } else if (amount > profileData.bank) {
+        } else if (amount > profileData.coins) {
                 const embed = new MessageEmbed()
                     .setTitle('Erreur')
-                    .setDescription(` Vous n'avez pas assez d'argent dans votre compte en banque !`)
+                    .setDescription(` Vous n'avez pas assez d'argent sur vous !`)
                     .setColor(`${red}`)
                 return message.channel.send(embed);
         }
 
-        amountW = parseInt(profileData.coins) + parseInt(amount);
-        amountB = parseInt(profileData.bank) - parseInt(amount);
+        amountW = parseInt(profileData.coins) - parseInt(amount);
+        amountB = parseInt(profileData.bank) + parseInt(amount);
         client.updateProfile(message.author, { coins: amountW, bank: amountB}, message.member.guild.id)
 
         const embed = new MessageEmbed()
             .setTitle('Retrait réussi')
-            .setDescription(`$${args[0]} ont été retirés avec succès.`)
+            .setDescription(`$${args[0]} ont été déposés avec succès.`)
             .setColor(`${green}`)
         message.channel.send(embed);
     }
