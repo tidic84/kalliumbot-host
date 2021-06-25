@@ -5,7 +5,7 @@ require('./util/functions')(client);
 
 const mongoose = require("mongoose");
 
-const { token , MONGODB_SRV} = require('./config');
+const {MONGODB_SRV} = require('./config');
 require('discord-buttons')(client) ;
 
 client.commands = new Discord.Collection();
