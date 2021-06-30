@@ -164,7 +164,6 @@ module.exports = {
 
 const video_player = async (guild, song, message) => {
     const song_queue = queue.get(guild.id);
-
     if(!song) {
         song_queue.voice_channel.leave();
         queue.delete(guild.id);
@@ -183,7 +182,9 @@ const video_player = async (guild, song, message) => {
                 video_player(guild, song_queue.songs[0], message);
             }
         });
+        
         if (!loop) { 
+            //if (list.length)
         const embed = new MessageEmbed()
         .setAuthor(`Lecture`)
         .setTitle(`${song.title}`)
